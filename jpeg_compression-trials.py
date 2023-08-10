@@ -45,7 +45,7 @@ def create_directories(base_directory, folder_name):
 base_directory = "C:/Users/ilker/Desktop/deneme"
 source_directory = os.path.join(base_directory, "pnomoni")
 
-for i, filename in enumerate(os.listdir(source_directory)):
+for index, filename in enumerate(os.listdir(source_directory)):
     if filename.startswith("image-"):
         folder_name = filename.split("-")[1].split(".")[0]
 
@@ -55,8 +55,9 @@ for i, filename in enumerate(os.listdir(source_directory)):
         img_path = os.path.join(source_directory, filename)
 
         # Move image to the compressed image directory
-        new_img_path = os.path.join(compressed_image_directory, filename)
-        shutil.copy(img_path, new_img_path)
+        # new_filename = f"compressed-{filename}-{i}"
+        # new_img_path = os.path.join(compressed_image_directory, new_filename)
+        # shutil.copy(img_path, new_img_path)
 
         # Perform additional operations (e.g., compression) on the image if needed
 
@@ -65,6 +66,10 @@ for i, filename in enumerate(os.listdir(source_directory)):
         print(f"Processed image {filename} in folder {folder_name}")
 
         for i in range(0, len(loaded_quantalama)):
+            new_filename = f"compressed-{i}-{filename}"
+            new_img_path = os.path.join(compressed_image_directory, new_filename)
+            shutil.copy(img_path, new_img_path)
+
             quantization_matrix = np.array(loaded_quantalama[i], dtype=np.float32)
             print(quantization_matrix)
 
@@ -406,7 +411,8 @@ for i, filename in enumerate(os.listdir(source_directory)):
                 else:
                     compression_ratio = img.size / total_number_of_elements(encoded_img, color)
 
-                compressed_img_path = new_img_path + ".jpg"
+                compressed_img_path = new_img_path
+                print(compressed_img_path)
                 cv.imwrite(compressed_img_path, compressed_img)
 
                 data = {
@@ -417,7 +423,7 @@ for i, filename in enumerate(os.listdir(source_directory)):
                 df = pd.DataFrame(data)
 
                 # Excel dosyasına kaydetme
-                excel_file_path = excel_file_directory + "psnr_compression_data_image_" + str(i) + ".xlsx"
+                excel_file_path = excel_file_directory +"-"+ str(i) + ".xlsx"
                 df.to_excel(excel_file_path, index=False)
                 print("Veriler Excel dosyasına kaydedildi:", excel_file_path)
                 # Return the original image, compressed image, PSNR, and compression ratio
@@ -466,7 +472,7 @@ for i, filename in enumerate(os.listdir(source_directory)):
                 axs[1].set_title("Compressed Image")
 
                 #plt.savefig(plt_save_directory + '.png')
-                plt_filename = f"compressed-{folder_name}-plt.png"
+                plt_filename = f"compressed-{folder_name}-{i}-plt.png"
                 plt_save_path = os.path.join(plt_save_directory, plt_filename)
                 plt.savefig(plt_save_path)
                 print("Grafik kaydedildi:", plt_save_directory + '.png')
