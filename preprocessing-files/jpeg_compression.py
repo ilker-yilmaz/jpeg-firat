@@ -23,7 +23,7 @@ quantization_matrix = np.array(
 )
 
 loaded_quantalama = []
-with open("veri.json", "r") as file:
+with open("../veri.json", "r") as file:
     loaded_quantalama = json.load(file)
 
 print(len(loaded_quantalama))
@@ -414,7 +414,7 @@ for i in range(0, len(loaded_quantalama)):
             "PSNR = {:.2f}\nCompression Ratio = {:.2f}".format(psnr, compression_ratio)
         )
 
-        with open("encoded_image.txt", "w") as f:
+        with open("../encoded_image.txt", "w") as f:
             if color:
                 axs[0].imshow(cv.cvtColor(img, cv.COLOR_BGR2RGB))
                 axs[1].imshow(cv.cvtColor(compressed_img, cv.COLOR_BGR2RGB))
