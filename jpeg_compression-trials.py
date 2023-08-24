@@ -44,9 +44,9 @@ def create_directories(base_directory, folder_name):
     return plt_save_directory, compressed_image_directory, excel_file_directory
 
 
-base_directory = "E:/deneme-bitti/"
+base_directory = "E:/deneme-bitti/" # oluşan sonuçların kaydedilmesini istediğiniz klasör.
 # source_directory = os.path.join(base_directory, "pnomoni")
-source_directory = os.path.join("C:/Users/ilker/Desktop/deneme")
+source_directory = os.path.join("C:/Users/ilker/Desktop/deneme") # görüntü kümesinin olacağı klasör.
 
 for index, filename in enumerate(os.listdir(source_directory)):
     if filename.startswith("image-"):
@@ -70,7 +70,7 @@ for index, filename in enumerate(os.listdir(source_directory)):
 
         print(f"Processed image {filename} in folder {folder_name}")
 
-        for i in range(108, 111):
+        for i in range(0, len(loaded_quantalama)):
             new_filename = f"compressed-{i}-{filename}"
             new_img_path = os.path.join(compressed_image_directory, new_filename)
             shutil.copy(img_path, new_img_path)
